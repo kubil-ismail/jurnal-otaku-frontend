@@ -3,7 +3,7 @@ import AllRoutes from "./routes";
 import { Helmet } from "react-helmet";
 import { Routes, Route } from "react-router-dom";
 // @custome component
-import MainBackdrop from "components/backdrop";
+import MainBackdrop from "components/ui/backdrop";
 
 function App() {
   return (

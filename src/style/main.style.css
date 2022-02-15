@@ -3,3 +3,89 @@ body,
   margin: 0;
   padding: 0;
 }
+
+.header_title {
+  font-family: "Great Vibes", cursive !important;
+  font-size: 60px !important;
+}
+
+.star {
+  position: relative;
+
+  display: inline-block;
+  width: 0;
+  height: 0;
+
+  margin-left: 0.9em;
+  margin-right: 0.9em;
+  margin-bottom: 1.2em;
+
+  border-right: 0.3em solid transparent;
+  border-bottom: 0.7em solid #fc0;
+  border-left: 0.3em solid transparent;
+
+  /* Controlls the size of the stars. */
+  font-size: 6px;
+}
+
+.star-none {
+  border-bottom: 0.7em solid #dcdcdc !important;
+}
+
+.star:before,
+.star:after {
+  content: "";
+
+  display: block;
+  width: 0;
+  height: 0;
+
+  position: absolute;
+  top: 0.6em;
+  left: -1em;
+
+  border-right: 1em solid transparent;
+  border-bottom: 0.7em solid #fc0;
+  border-left: 1em solid transparent;
+
+  transform: rotate(-35deg);
+}
+
+.star-none:before,
+.star-none:after {
+  border-bottom: 0.7em solid #dcdcdc !important;
+}
+
+.star:after {
+  transform: rotate(35deg);
+}
+
+.content,
+.spaceit {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 200;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+#home .content,
+#home .spaceit {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.spaceit {
+  border-top: none !important;
+}
+
+.userimg {
+  display: none;
+}
+
+.slick-arrow,
+.slick-next {
+  display: none !important;
+}

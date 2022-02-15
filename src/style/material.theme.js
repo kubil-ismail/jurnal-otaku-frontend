@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 const mainTheme = createTheme({
   typography: {
-    fontFamily: "Poppins, sans-serif",
+    fontFamily: "'Source Sans Pro', sans-serif",
     h1: {
       fontSize: "48px",
       fontWeight: "600",
@@ -28,12 +28,15 @@ const mainTheme = createTheme({
       fontWeight: "600",
     },
     body1: {
+      fontWeight: "300",
       fontSize: "14px",
     },
     body2: {
+      fontWeight: "300",
       fontSize: "14px",
     },
     button: {
+      fontWeight: "400",
       textTransform: "inherit",
     },
   },
@@ -43,15 +46,15 @@ const mainTheme = createTheme({
       contrastText: "#fff",
     },
     info: {
-      main: "#009ec1",
-      contrastText: "#fff",
+      main: "#B4B4B4",
+      contrastText: "#0076d6",
     },
     secondary: {
       main: "#676cc8",
       contrastText: "#fff",
     },
     error: {
-      main: "#e52207",
+      main: "#EC1C23",
       contrastText: "#fff",
     },
     warning: {
@@ -63,7 +66,7 @@ const mainTheme = createTheme({
       contrastText: "#fff",
     },
     text: {
-      primary: "#171717",
+      primary: "#3F2418",
       secondary: "#adadad",
       disabled: "#ffffff",
     },
@@ -76,9 +79,15 @@ const mainTheme = createTheme({
         size: "small",
       },
       styleOverrides: {
-        outlinedPrimary: {
-          fontSize: "11px",
+        textInherit: {
+          color: "#000000",
         },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        size: "small",
+        margin: "dense",
       },
     },
   },

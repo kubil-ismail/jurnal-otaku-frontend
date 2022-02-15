@@ -4,104 +4,61 @@ import Box from "@mui/material/Box";
 
 import Navbar from "components/ui/navbar";
 import Footer from "components/ui/footer";
-import { Button, Typography, Container, Grid, Divider } from "@mui/material";
+
+import Typography from "@mui/material/Typography";
+import Breadcrumbs from "@mui/material/Breadcrumbs";
+import Link from "@mui/material/Link";
+import { Button, Container, Grid } from "@mui/material";
+
 import http from "utils/http";
-import Slider from "react-slick";
-import ReviewsBox from "components/pages/Home/ReviewsBox";
-import NewsBox from "components/pages/Home/NewsBox";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-};
+function Detail() {
+  let location = useLocation();
+  let paramId = location.pathname.split("/")[3];
 
-function Home() {
-  let navigate = useNavigate();
-  const [reviews, setReviews] = React.useState(null);
   const [news, setNews] = React.useState(null);
-  const [banner, setBanner] = React.useState(null);
   const [anime, setAnime] = React.useState(null);
 
   React.useEffect(() => {
-    http.get("/news").then(({ data }) => setNews(data.data.rows));
-    http.get("/reviews").then(({ data }) => setReviews(data.data.rows));
-    http.get("/banner").then(({ data }) => setBanner(data.data));
+    http.get(`/news/detail/${paramId}`).then(({ data }) => setNews(data.data));
     http.get("/anime/best-of-week").then(({ data }) => setAnime(data.data));
-  }, []);
+  }, [paramId]);
 
   return (
-    <Box height="100vh" id="home" width="100vw">
+    <Box height="100vh" width="100vw">
       <Navbar />
 
-      <Box mb={5}>
-        <Slider {...settings}>
-          {banner?.map((val) => (
-            <div>
-              <Box
-                height="350px"
-                sx={{
-                  backgroundImage: `url('${val.url}')`,
-                  backgroundSize: "cover",
-                  backgroundRepeat: "no-repeat",
-                }}
-              ></Box>
-            </div>
-          ))}
-        </Slider>
-      </Box>
+      <Container sx={{ py: 3 }}>
+        <Box mb={2}>
+          <Breadcrumbs aria-label="breadcrumb">
+            <Link underline="hover" color="inherit" href="/news/all">
+              News
+            </Link>
+            <Typography color="text.primary">{news?.title}</Typography>
+          </Breadcrumbs>
+        </Box>
 
-      <Container>
         <Grid container spacing={2}>
-          <Grid item md={9} xs={12}>
-            <section>
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-                mb={2}
-              >
-                <Typography variant="h4">Recent News</Typography>
-                <Button color="info" onClick={() => navigate("/news")}>
-                  View All
-                </Button>
-              </Box>
+          <Grid item md={9}>
+            <Box>
+              <img
+                src={news?.cover}
+                alt="news cover"
+                style={{
+                  float: "left",
+                  margin: "0px 10px 10px 0px",
+                  borderRadius: "5px",
+                }}
+                height="300px"
+              />
 
-              {news?.map((val, key) => (
-                <Box mb={3} key={`news-${key}`}>
-                  <NewsBox val={val} />
-                </Box>
-              ))}
-            </section>
-
-            <Divider sx={{ mb: 2 }} />
-
-            <section>
-              <Box
-                display="flex"
-                alignItems="center"
-                justifyContent="space-between"
-                mb={2}
-              >
-                <Typography variant="h4">Recent Reviews</Typography>
-                <Button color="info" onClick={() => navigate("/reviews")}>
-                  View All
-                </Button>
-              </Box>
-
-              {reviews?.map((val, key) => (
-                <Box mb={3} key={`reviews-${key}`}>
-                  <ReviewsBox index={key} val={val} />
-                </Box>
-              ))}
-            </section>
-
-            <Divider sx={{ mb: 2 }} />
+              <Typography variant="h4" gutterBottom>
+                {news?.title}
+              </Typography>
+              <div dangerouslySetInnerHTML={{ __html: news?.value }} />
+            </Box>
           </Grid>
-
           <Grid item md={3} xs={12}>
             <section>
               <Box
@@ -111,12 +68,7 @@ function Home() {
                 mb={2}
               >
                 <Typography variant="h4">Anime of the week</Typography>
-                <Button
-                  color="info"
-                  onClick={() => navigate(`/anime/best-of-the-week`)}
-                >
-                  View All
-                </Button>
+                <Button color="info">View All</Button>
               </Box>
 
               {anime?.map((val, key) => (
@@ -190,7 +142,7 @@ function Home() {
   );
 }
 
-Home.propTypes = {};
+Detail.propTypes = {};
 
 const mapStateToProps = (state) => ({
   example: state,
@@ -198,4 +150,4 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(memo(Home));
+export default connect(mapStateToProps, mapDispatchToProps)(memo(Detail));

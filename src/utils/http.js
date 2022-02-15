@@ -2,13 +2,13 @@ import axios from "axios";
 import rateLimit from "axios-rate-limit";
 import Swal from "sweetalert2";
 
-const http = rateLimit(axios.create(), {
+const http = rateLimit(axios.create({ baseURL: "http://localhost:5005/v1" }), {
   maxRequests: 2,
   perMilliseconds: 1000,
   maxRPS: 2,
 });
 
-const token = localStorage.getItem("token") || null; // your auth token
+const token = localStorage.getItem("session") || null; // your auth token
 
 if (token) {
   http.defaults.headers.common.Authorization = `Bearer ${token}`;
@@ -22,7 +22,7 @@ http.interceptors.response.use(
     if (error.response !== undefined) {
       if (error.response.status === 401) {
         // if auth not falid remove token
-        localStorage.removeItem("token");
+        localStorage.removeItem("session");
         delete http.defaults.headers.common.Authorization;
         // redirect to logout pages
         window.location.href = "/logout";
