@@ -21,7 +21,7 @@ function Detail() {
   const [anime, setAnime] = React.useState(null);
 
   React.useEffect(() => {
-    http.get(`/news/detail/${paramId}`).then(({ data }) => setNews(data.data));
+    http.get(`/reviews/detail/${paramId}`).then(({ data }) => setNews(data.data));
     http.get("/anime/best-of-week").then(({ data }) => setAnime(data.data));
   }, [paramId]);
 
