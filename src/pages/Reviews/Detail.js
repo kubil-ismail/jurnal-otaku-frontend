@@ -21,7 +21,9 @@ function Detail() {
   const [anime, setAnime] = React.useState(null);
 
   React.useEffect(() => {
-    http.get(`/reviews/detail/${paramId}`).then(({ data }) => setNews(data.data));
+    http
+      .get(`/reviews/detail/${paramId}`)
+      .then(({ data }) => setNews(data.data));
     http.get("/anime/best-of-week").then(({ data }) => setAnime(data.data));
   }, [paramId]);
 
@@ -41,23 +43,25 @@ function Detail() {
 
         <Grid container spacing={2}>
           <Grid item md={9}>
-            <Box>
-              <img
-                src={news?.cover}
-                alt="news cover"
-                style={{
-                  float: "left",
-                  margin: "0px 10px 10px 0px",
-                  borderRadius: "5px",
-                }}
-                height="300px"
-              />
-
-              <Typography variant="h4" gutterBottom>
-                {news?.title}
-              </Typography>
-              <div dangerouslySetInnerHTML={{ __html: news?.value }} />
-            </Box>
+            <img
+              src={news?.anime.cover}
+              alt="news cover"
+              style={{
+                margin: "0px 10px 10px 0px",
+                borderRadius: "5px",
+              }}
+              height="300px"
+            />
+            <Grid container spacing={1}>
+              <Grid item md={12} xs={12}>
+                <div>
+                  <Typography variant="h4" gutterBottom>
+                    {news?.title}
+                  </Typography>
+                  <div dangerouslySetInnerHTML={{ __html: news?.value }} />
+                </div>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item md={3} xs={12}>
             <section>
